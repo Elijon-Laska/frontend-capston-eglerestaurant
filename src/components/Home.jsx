@@ -1,5 +1,5 @@
 import Header from "./header/Header";
-import CustomNavbar from "./navbar/navbar";
+
 import videoBg from "../assets/3338747-uhd_4096_2160_25fps.mp4";
 import "./Home.css";
 
@@ -18,7 +18,7 @@ const Home = () => {
       <div className="video-bg-wrapper ">
         <video className="video-bg" src={videoBg} autoPlay loop muted playsInline />
       </div>
-      <CustomNavbar />
+
       <Header />
       <div className="after-video-content">
         <MembriTeam />

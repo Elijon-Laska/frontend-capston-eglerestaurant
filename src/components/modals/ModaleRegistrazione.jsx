@@ -31,11 +31,11 @@ const ModaleRegistrazione = () => {
         <Modal.Title>
           {isLogin ? (
             <>
-              Accedi a <span style={{ color: "#FFD700" }}>E G L E</span>
+              Accedi a <span style={{ color: "rgba(226, 196, 196, 0.767)" }}>E G L E</span>
             </>
           ) : (
             <>
-              Registrati su <span style={{ color: "#FFD700" }}>E G L E</span>
+              Registrati su <span style={{ color: "rgba(226, 196, 196, 0.767)" }}>E G L E</span>
             </>
           )}
         </Modal.Title>
@@ -92,10 +92,10 @@ const ModaleRegistrazione = () => {
         <small>
           {isLogin ? (
             <>
-              Non hai un account?{" "}
+              Non hai un account?
               <a
                 href="#"
-                style={{ color: "#FFD700", cursor: "pointer" }}
+                style={{ color: "rgba(226, 196, 196, 0.767);", cursor: "pointer" }}
                 onClick={(e) => {
                   e.preventDefault();
                   setIsLogin(false);
@@ -106,10 +106,10 @@ const ModaleRegistrazione = () => {
             </>
           ) : (
             <>
-              Hai già un account?{" "}
+              Hai già un account?
               <a
                 href="#"
-                style={{ color: "#FFD700", cursor: "pointer" }}
+                style={{ color: "rgba(226, 196, 196, 0.767)", cursor: "pointer" }}
                 onClick={(e) => {
                   e.preventDefault();
                   setIsLogin(true);

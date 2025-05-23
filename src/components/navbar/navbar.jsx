@@ -6,8 +6,10 @@ import { Book } from "react-bootstrap-icons";
 import { TelephoneFill } from "react-bootstrap-icons";
 import { GeoAltFill } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
-import { showRegisterModal } from "../../redux/actions";
+import { showPrenotazioneModal, showRegisterModal } from "../../redux/actions";
 import ModaleRegistrazione from "../modals/ModaleRegistrazione";
+import ModalePrenotazione from "../modals/ModalePrenotazione";
+import { Link } from "react-router-dom";
 
 const CustomNavbar = () => {
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const CustomNavbar = () => {
     <>
       <Navbar expand="lg" className="bg-transparent sticky-top bg-body-tertiary ">
         <Container fluid className="text-color-custom">
-          <Navbar.Brand href="#home" className="d-flex align-items-center me-auto ">
+          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center me-auto ">
             <img src={logo} alt="Logo" width="50" height="50" className="me-2 navbar-logo" />
             <span className="fw-bold navbar-title">E G L E amore e cucina</span>
           </Navbar.Brand>
@@ -47,10 +49,14 @@ const CustomNavbar = () => {
               <Nav.Link href="#home">
                 <Book />
               </Nav.Link>
-              <Nav.Link href="#menu">
+              <Nav.Link as={Link} to="/contatti">
                 <TelephoneFill />
               </Nav.Link>
-              <Nav.Link href="#prenotazioni">
+              <Nav.Link
+                href="https://www.google.com/maps/search/?api=1&query=Via+Vitellia+100+00152+Roma+RM"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <GeoAltFill />
               </Nav.Link>
               <Nav.Link style={{ fontWeight: "bold", color: "#FFD700" }} onClick={() => dispatch(showRegisterModal())}>
@@ -58,11 +64,16 @@ const CustomNavbar = () => {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
-          <Button variant="success" className="navbar-button navbar-round-btn ">
+          <Button
+            variant="success"
+            className="navbar-button navbar-round-btn"
+            onClick={() => dispatch(showPrenotazioneModal())}
+          >
             <SendArrowUpFill className="ms-2" />
           </Button>
         </Container>
       </Navbar>
+      <ModalePrenotazione />
       <ModaleRegistrazione />
     </>
   );

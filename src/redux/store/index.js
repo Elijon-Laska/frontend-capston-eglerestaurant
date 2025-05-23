@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../reducers/userReducer";
+import prenotazioneReducer from "../reducers/prenotazioneReducer";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
-    // qui si puo aggiungere altri reducer
+    prenotazione: prenotazioneReducer,
+    // altri reducer...
   },
 });
 
