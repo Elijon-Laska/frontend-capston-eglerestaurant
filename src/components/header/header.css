@@ -1,0 +1,19 @@
+.header-card-img {
+  max-width: 14rem;
+  min-width: 10rem;
+  max-height: 31.5rem;
+
+  background-size: cover;
+  background-position: center;
+  margin-left: auto;
+  display: block;
+  border-radius: 0%;
+  border: none;
+}
+
+.header-card-img .btn {
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  padding: 0;
+}

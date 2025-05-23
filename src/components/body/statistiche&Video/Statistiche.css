@@ -1,0 +1,26 @@
+.statistiche-shadow {
+  background: rgba(255, 255, 255, 0.473);
+  box-shadow: 0 4px 24px 0 rgba(80, 80, 80, 0.18), 0 1.5px 6px 0 rgba(180, 180, 180, 0.1);
+  border-radius: 0rem;
+  padding: 0.75rem 0.5rem;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(8px);
+  transition: box-shadow 0.2s;
+  padding: 1.5rem 1rem;
+  width: 100%;
+  margin: 0.5rem;
+}
+
+.statistiche-col-bg {
+  background: rgba(255, 255, 255, 0.562);
+  border-radius: 0rem;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  padding: 1rem 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.statistiche-video {
+  width: 100%;
+
+  display: block;
+}

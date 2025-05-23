@@ -1,0 +1,20 @@
+.team-col-shadow {
+  background: rgba(255, 255, 255, 0.473);
+  box-shadow: 0 4px 24px 0 rgba(80, 80, 80, 0.18), 0 1.5px 6px 0 rgba(180, 180, 180, 0.1);
+  border-radius: 0rem;
+  padding: 0.75rem 0.5rem;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(8px);
+  transition: box-shadow 0.2s;
+  max-width: 300px;
+  width: 100%;
+  margin: 0.5rem;
+}
+
+.team-img {
+  max-width: 70vh;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 1rem;
+}

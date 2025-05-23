@@ -1,0 +1,40 @@
+body {
+  background-image: url("./assets/marble-bg.jpg");
+  background-size: auto;
+  background-repeat: repeat;
+  background-position: top left;
+  min-height: 100vh;
+  color: rgba(141, 112, 112, 0.767);
+}
+
+body::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+button:hover,
+a:hover,
+[role="button"]:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="link"]:hover {
+  transform: scale(1.05);
+  transition: transform 0.18s cubic-bezier(0.4, 2, 0.6, 1);
+  z-index: 2;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-content {
+  flex: 1;
+}

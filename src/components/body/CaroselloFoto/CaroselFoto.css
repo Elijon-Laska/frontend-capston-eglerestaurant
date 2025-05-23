@@ -1,0 +1,13 @@
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1) brightness(0.3) sepia(1) hue-rotate(180deg) saturate(5);
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: #b48a78 !important;
+  border: none;
+  opacity: 1;
+}
+.carousel-indicators .active {
+  background-color: #8d695b !important;
+}
