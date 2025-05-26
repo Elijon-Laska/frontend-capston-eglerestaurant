@@ -1,6 +1,10 @@
 const initialState = {
   showRegisterModal: false,
-  // ...altri stati utente
+  showLoginModal: false,
+  user: null,
+  loading: false,
+  error: null,
+  token: localStorage.getItem("token"),
 };
 
 const userReducer = (state = initialState, action) => {

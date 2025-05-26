@@ -2,10 +2,12 @@ import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { hidePrenotazioneModal } from "../../redux/actions";
 import { useState } from "react";
+import FormValidator from "../common/FormValidator";
 
 const ModalePrenotazione = () => {
   const show = useSelector((state) => state.prenotazione.showPrenotazioneModal);
   const dispatch = useDispatch();
+
   const [form, setForm] = useState({
     nome: "",
     telefono: "",
@@ -16,16 +18,32 @@ const ModalePrenotazione = () => {
     richieste: "",
   });
 
+  // Inizializza la validazione
+  const [errors, setErrors] = useState({});
+  const { validateField, validate, isFormValid } = FormValidator({ type: "prenotazione" });
+
   const handleClose = () => dispatch(hidePrenotazioneModal());
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    const tempErrors = validateField(name, value, form);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: tempErrors,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Qui si può gestire la prenotazione (es: invio dati a backend)
-    handleClose();
+    const validationErrors = validate(form);
+    if (Object.keys(validationErrors).length === 0) {
+      console.log("Form valido:", form);
+      handleClose();
+    } else {
+      console.log("Errori:", validationErrors);
+      setErrors(validationErrors);
+    }
   };
 
   return (
@@ -46,8 +64,9 @@ const ModalePrenotazione = () => {
                   value={form.nome}
                   onChange={handleChange}
                   placeholder="Nome e Cognome"
-                  required
+                  isInvalid={!!errors.nome}
                 />
+                {errors.nome && <Form.Control.Feedback type="invalid">{errors.nome}</Form.Control.Feedback>}
               </FloatingLabel>
             </Col>
             <Col>
@@ -58,9 +77,10 @@ const ModalePrenotazione = () => {
                   value={form.telefono}
                   onChange={handleChange}
                   placeholder="Telefono"
-                  required
+                  isInvalid={!!errors.telefono}
                   pattern="[0-9]{6,15}"
                 />
+                {errors.telefono && <Form.Control.Feedback type="invalid">{errors.telefono}</Form.Control.Feedback>}
               </FloatingLabel>
             </Col>
           </Row>
@@ -73,21 +93,29 @@ const ModalePrenotazione = () => {
                   value={form.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  required
+                  isInvalid={!!errors.email}
                 />
+                {errors.email && <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>}
               </FloatingLabel>
             </Col>
           </Row>
           <Row className="mb-3">
             <Col>
               <FloatingLabel label="Numero di persone">
-                <Form.Select name="persone" value={form.persone} onChange={handleChange} required>
+                <Form.Select
+                  name="persone"
+                  value={form.persone}
+                  onChange={handleChange}
+                  isInvalid={!!errors.persone}
+                  required
+                >
                   {[...Array(10)].map((_, i) => (
                     <option key={i + 1} value={i + 1}>
                       {i + 1} persona{i + 1 > 1 ? "e" : ""}
                     </option>
                   ))}
                 </Form.Select>
+                {errors.persone && <Form.Text className="text-danger">{errors.persone}</Form.Text>}
               </FloatingLabel>
             </Col>
             <Col>
@@ -97,14 +125,24 @@ const ModalePrenotazione = () => {
                   name="data"
                   value={form.data}
                   onChange={handleChange}
+                  isInvalid={!!errors.data}
                   required
                   min={new Date().toISOString().split("T")[0]}
                 />
+                {errors.data && <Form.Control.Feedback type="invalid">{errors.data}</Form.Control.Feedback>}
               </FloatingLabel>
             </Col>
             <Col>
               <FloatingLabel label="Ora">
-                <Form.Control type="time" name="ora" value={form.ora} onChange={handleChange} required />
+                <Form.Control
+                  type="time"
+                  name="ora"
+                  value={form.ora}
+                  onChange={handleChange}
+                  isInvalid={!!errors.ora}
+                  required
+                />
+                {errors.ora && <Form.Control.Feedback type="invalid">{errors.ora}</Form.Control.Feedback>}
               </FloatingLabel>
             </Col>
           </Row>
@@ -117,10 +155,12 @@ const ModalePrenotazione = () => {
                 onChange={handleChange}
                 style={{ height: "80px" }}
                 placeholder="Richieste particolari"
+                isInvalid={!!errors.richieste}
               />
+              {errors.richieste && <Form.Control.Feedback type="invalid">{errors.richieste}</Form.Control.Feedback>}
             </FloatingLabel>
           </Form.Group>
-          <Button variant="primary" type="submit" className="w-100">
+          <Button variant="primary" type="submit" className="w-100" disabled={!isFormValid(form)}>
             Prenota ora
           </Button>
         </Form>

@@ -1,5 +1,9 @@
 const initialState = {
   showPrenotazioneModal: false,
+  prenotazioni: [],
+  loading: false,
+  error: null,
+  success: false,
 };
 
 const prenotazioneReducer = (state = initialState, action) => {
