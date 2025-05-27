@@ -1,8 +1,26 @@
 const FormValidator = (props) => {
   const validate = (formValues = {}) => {
     const errors = {};
+    // Validazione specifica per login
+    if (props.type === "login") {
+      // Email
+      if (!formValues.email) {
+        errors.email = "Email è richiesta";
+      } else if (!/^\S+@\S+\.\S+$/.test(formValues.email)) {
+        errors.email = "Email non valida";
+      }
 
-    // Validazioni comuni
+      // Password
+      if (!formValues.password) {
+        errors.password = "Password è richiesta";
+      } else if (formValues.password.length < 6) {
+        errors.password = "Password deve essere almeno 6 caratteri";
+      }
+
+      return errors;
+    }
+
+    // Validazioni comuni per registrazione e altri form
     if (props.type === "login" || props.type === "registration") {
       // Email
       if (!formValues.email) {
@@ -22,10 +40,6 @@ const FormValidator = (props) => {
         errors.password = "Password deve contenere almeno una lettera minuscola";
       } else if (!/[A-Z]/.test(formValues.password)) {
         errors.password = "Password deve contenere almeno una lettera maiuscola";
-      } else if (!/[0-9]/.test(formValues.password)) {
-        errors.password = "Password deve contenere almeno un numero";
-      } else if (!/[!@#$%^&*]/.test(formValues.password)) {
-        errors.password = "Password deve contenere almeno un carattere speciale";
       }
 
       // Conferma password (per registrazione)
@@ -166,10 +180,34 @@ const FormValidator = (props) => {
     return Object.keys(tempErrors).length === 0;
   };
 
+  // Funzione per gestire errori del server
+  const validateServerErrors = (serverErrors = {}) => {
+    const errors = {};
+
+    // Gestione errori specifici del server
+    if (serverErrors.email) {
+      errors.email = serverErrors.email;
+    } else if (serverErrors.message) {
+      errors.message = serverErrors.message;
+    }
+
+    // Gestione errori per campi specifici
+    if (serverErrors.errors) {
+      serverErrors.errors.forEach((error) => {
+        if (error.field) {
+          errors[error.field] = error.message;
+        }
+      });
+    }
+
+    return errors;
+  };
+
   return {
     validate,
     validateField,
     isFormValid,
+    validateServerErrors,
   };
 };
 

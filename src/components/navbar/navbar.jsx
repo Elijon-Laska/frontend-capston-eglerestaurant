@@ -5,7 +5,7 @@ import { SendArrowUpFill } from "react-bootstrap-icons";
 import { Book } from "react-bootstrap-icons";
 import { TelephoneFill } from "react-bootstrap-icons";
 import { GeoAltFill } from "react-bootstrap-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showPrenotazioneModal, showRegisterModal } from "../../redux/actions";
 import ModaleRegistrazione from "../modals/ModaleRegistrazione";
 import ModalePrenotazione from "../modals/ModalePrenotazione";
@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 
 const CustomNavbar = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
   return (
     <>
       <Navbar expand="lg" className="bg-transparent sticky-top bg-body-tertiary ">
@@ -59,9 +60,23 @@ const CustomNavbar = () => {
               >
                 <GeoAltFill />
               </Nav.Link>
-              <Nav.Link style={{ fontWeight: "bold", color: "#FFD700" }} onClick={() => dispatch(showRegisterModal())}>
-                Log-in/Registrati
-              </Nav.Link>
+              {user ? (
+                <NavDropdown title={` ${user.nome} ${user.cognome}`} id="user-dropdown" menuVariant="dark">
+                  <NavDropdown.Item onClick={() => dispatch({ type: "LOGOUT" })}>
+                    <div className="d-flex align-items-center">
+                      <span className="me-2">Logout</span>
+                      <i className="bi bi-box-arrow-right"></i>
+                    </div>
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <Nav.Link
+                  style={{ fontWeight: "bold", color: "#FFD700" }}
+                  onClick={() => dispatch(showRegisterModal())}
+                >
+                  Log-in/Registrati
+                </Nav.Link>
+              )}
             </Nav>
           </Navbar.Collapse>
           <Button
