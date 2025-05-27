@@ -65,7 +65,6 @@ const CustomNavbar = () => {
                   <NavDropdown.Item onClick={() => dispatch({ type: "LOGOUT" })}>
                     <div className="d-flex align-items-center">
                       <span className="me-2">Logout</span>
-                      <i className="bi bi-box-arrow-right"></i>
                     </div>
                   </NavDropdown.Item>
                 </NavDropdown>

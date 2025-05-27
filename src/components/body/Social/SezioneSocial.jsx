@@ -12,12 +12,13 @@ const Seguici = () => {
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
             <FaFacebook color="#1877f3" />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-            <FaInstagram color="#E4405F" />
-          </a>
           <a href="https://x.com" target="_blank" rel="noopener noreferrer">
             <FaXTwitter color="#000" />
           </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+            <FaInstagram color="#E4405F" />
+          </a>
+
           <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">
             <FaTiktok color="#000" />
           </a>

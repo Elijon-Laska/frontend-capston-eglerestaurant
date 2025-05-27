@@ -147,7 +147,13 @@ const ModaleRegistrazione = () => {
             {error}
           </Alert>
         ) : null}
-
+        {isLogin && successMessage && (
+          <Alert variant="success" className="mb-3">
+            Registrazione avvenuta con successo!
+            <br />
+            Ti abbiamo inviato una mail di conferma all’indirizzo inserito. Effettua il Login.
+          </Alert>
+        )}
         {/* Spinner di loading */}
         {loading && (
           <div className="text-center mb-3">
