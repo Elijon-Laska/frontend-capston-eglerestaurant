@@ -2,6 +2,7 @@ import "./App.css";
 import Home from "./components/Home";
 import Footer from "./components/Footer/Footer";
 import ContattiPage from "./components/pagineContatti/ContattiPage";
+import MenuPage from "./components/pagineContatti/MenuPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CustomNavbar from "./components/navbar/navbar";
 import { Spinner, Alert } from "react-bootstrap";
@@ -69,6 +70,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/contatti" element={<ContattiPage />} />
+          <Route path="/menu" element={<MenuPage />} />
           {/* qui si possono aggiungiere altre route  */}
         </Routes>
       </div>

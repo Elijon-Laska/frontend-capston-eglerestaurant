@@ -7,13 +7,21 @@ import { TelephoneFill } from "react-bootstrap-icons";
 import { GeoAltFill } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { showPrenotazioneModal, showRegisterModal } from "../../redux/actions";
+import { useEffect } from "react";
+import { fetchDishes, showDishDetails } from "../../redux/actions/dishesActions";
 import ModaleRegistrazione from "../modals/ModaleRegistrazione";
 import ModalePrenotazione from "../modals/ModalePrenotazione";
+import DishDetailsModal from "../modals/DishDetailsModal";
 import { Link } from "react-router-dom";
 
 const CustomNavbar = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const { dishes, loading } = useSelector((state) => state.dishes);
+
+  useEffect(() => {
+    dispatch(fetchDishes());
+  }, [dispatch]);
   return (
     <>
       <Navbar expand="lg" className="bg-transparent sticky-top bg-body-tertiary ">
@@ -25,29 +33,84 @@ const CustomNavbar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="me-1" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="navbar-center mx-auto d-flex ">
-              <NavDropdown title="Antipasti" id="nav-dropdown-1 " menuVariant="dark">
-                <NavDropdown.Item href="#contatti">Code di gamberoni</NavDropdown.Item>
-                <NavDropdown.Item href="#about">Alici Fritte</NavDropdown.Item>
+              <NavDropdown title="Antipasti" id="nav-dropdown-1" menuVariant="dark">
+                {loading ? (
+                  <NavDropdown.Item>Loading...</NavDropdown.Item>
+                ) : (
+                  dishes.antipasti.map((dish, index) => (
+                    <NavDropdown.Item
+                      key={dish.id || index}
+                      onClick={() => dispatch(showDishDetails(dish))}
+                      className="d-flex align-items-center p-2"
+                    >
+                      <div className="d-flex flex-column">
+                        <span className="fw-bold">{dish.name}</span>
+                      </div>
+                      <div className="d-flex align-items-center ms-auto">
+                        <span className="text-success">{dish.price}€</span>
+                      </div>
+                    </NavDropdown.Item>
+                  ))
+                )}
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#feedback">Vai ai dettagli</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/menu">
+                  Vai al Menù completo
+                </NavDropdown.Item>
               </NavDropdown>
 
               <NavDropdown title="Primi" id="nav-dropdown-2" menuVariant="dark">
-                <NavDropdown.Item href="#contatti">Carbonara</NavDropdown.Item>
-                <NavDropdown.Item href="#about">Amatriciana</NavDropdown.Item>
+                {loading ? (
+                  <NavDropdown.Item>Loading...</NavDropdown.Item>
+                ) : (
+                  dishes.primi.map((dish, index) => (
+                    <NavDropdown.Item
+                      key={dish.id || index}
+                      onClick={() => dispatch(showDishDetails(dish))}
+                      className="d-flex align-items-center p-2"
+                    >
+                      <div className="d-flex flex-column">
+                        <span className="fw-bold">{dish.name}</span>
+                      </div>
+                      <div className="d-flex align-items-center ms-auto">
+                        <span className="text-success">{dish.price}€</span>
+                      </div>
+                    </NavDropdown.Item>
+                  ))
+                )}
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#feedback">Vai ai dettagli</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item as={Link} to="/menu">
+                  Vai al Menù completo
+                </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Secondi" id="nav-dropdown-3" menuVariant="dark">
-                <NavDropdown.Item href="#contatti">Saltimbocca</NavDropdown.Item>
-                <NavDropdown.Item href="#about">Ossobuco</NavDropdown.Item>
+                {loading ? (
+                  <NavDropdown.Item>Loading...</NavDropdown.Item>
+                ) : (
+                  dishes.secondi.map((dish, index) => (
+                    <NavDropdown.Item
+                      key={dish.id || index}
+                      onClick={() => dispatch(showDishDetails(dish))}
+                      className="d-flex align-items-center p-2"
+                    >
+                      <div className="d-flex flex-column">
+                        <span className="fw-bold">{dish.name}</span>
+                      </div>
+                      <div className="d-flex align-items-center ms-auto">
+                        <span className="text-success">{dish.price}€</span>
+                      </div>
+                    </NavDropdown.Item>
+                  ))
+                )}
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#feedback">Vai ai dettagli</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/menu">
+                  Vai al Menù completo
+                </NavDropdown.Item>
               </NavDropdown>
             </Nav>
 
             <Nav className="d-flex  navbar-links-gap">
-              <Nav.Link href="#home">
+              <Nav.Link as={Link} to="/menu">
                 <Book />
               </Nav.Link>
               <Nav.Link as={Link} to="/contatti">
@@ -89,6 +152,7 @@ const CustomNavbar = () => {
       </Navbar>
       <ModalePrenotazione />
       <ModaleRegistrazione />
+      <DishDetailsModal />
     </>
   );
 };

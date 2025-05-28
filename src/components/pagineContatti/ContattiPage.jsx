@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, ListGroup } from "react-bootstrap";
 const ContattiPage = () => (
   <Container className="my-5">
     <Row className="justify-content-center">
+      <h1 className="text-center mb-5">Contatti</h1>
       <Col xs={12} md={6} className="mb-4 mb-md-0">
         <Card className="shadow-sm border-0">
           <Card.Body>

@@ -18,7 +18,6 @@ const ModalePrenotazione = () => {
     richieste: "",
   });
 
-  // Inizializza la validazione
   const [errors, setErrors] = useState({});
   const { validateField, validate, isFormValid } = FormValidator({ type: "prenotazione" });
 

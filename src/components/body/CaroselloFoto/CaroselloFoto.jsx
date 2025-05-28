@@ -1,22 +1,21 @@
 import { useState } from "react";
 import { Carousel, Row, Col } from "react-bootstrap";
-import img1 from "../../../assets/egle-logo - Copia.png";
-import img2 from "../../../assets/egle-logo-1.PNG";
-import img3 from "../../../assets/proprietario-2-copia.jpg";
-import img4 from "../../../assets/proprietaria.jpg";
-import img5 from "../../../assets/egle-logo - Copia.png";
+import { useSelector } from "react-redux";
 import "./CaroselFoto.css";
-const images = [img1, img2, img3, img4, img5];
 
-function arrayScomposto(arr, size) {
-  const scomposto = [];
-  for (let i = 0; i < arr.length; i += size) {
-    scomposto.push(arr.slice(i, i + size));
+const LeNostreDelizie = () => {
+  const { dishes } = useSelector((state) => state.dishes);
+  const allDishes = [...dishes.antipasti, ...dishes.primi, ...dishes.secondi];
+  const images = allDishes.map((dish) => dish.imageUrl).filter(Boolean);
+
+  function arrayScomposto(arr, size) {
+    const scomposto = [];
+    for (let i = 0; i < arr.length; i += size) {
+      scomposto.push(arr.slice(i, i + size));
+    }
+    return scomposto;
   }
-  return scomposto;
-}
 
-function LeNostreDelizie() {
   const [index, setIndex] = useState(0);
   const groupedImages = arrayScomposto(images, 4);
 
@@ -32,19 +31,11 @@ function LeNostreDelizie() {
           <Carousel.Item key={idx}>
             <Row className="justify-content-center flex-nowrap" style={{ overflow: "hidden" }}>
               {group.map((img, i) => (
-                <Col
-                  key={i}
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ flex: "0 0 25%", maxWidth: "25%" }}
-                >
+                <Col key={i} className="d-flex justify-content-center align-items-center col-md-3">
                   <img
                     src={img}
                     alt={`Delizia ${idx * 4 + i + 1}`}
-                    style={{
-                      width: "100%",
-                      maxHeight: "200px",
-                      objectFit: "contain",
-                    }}
+                    className="carousel-item-img"
                   />
                 </Col>
               ))}
@@ -54,6 +45,6 @@ function LeNostreDelizie() {
       </Carousel>
     </div>
   );
-}
+};
 
 export default LeNostreDelizie;
