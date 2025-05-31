@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // setError("Errore di caricamento dati! Riprova più tardi."); // Scommenta per testare l'errore
+      // setError("Errore di caricamento dati! Riprova più tardi."); // Scommentare per testare l'errore
       setLoading(false);
     }, 1000);
 

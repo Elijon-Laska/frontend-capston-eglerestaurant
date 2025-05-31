@@ -1,6 +1,6 @@
 import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { hidePrenotazioneModal } from "../../redux/actions";
+import { hidePrenotazioneModal, createPrenotazione } from "../../redux/actions";
 import { useState } from "react";
 import FormValidator from "../common/FormValidator";
 
@@ -38,7 +38,16 @@ const ModalePrenotazione = () => {
     const validationErrors = validate(form);
     if (Object.keys(validationErrors).length === 0) {
       console.log("Form valido:", form);
-      handleClose();
+      console.log("Dati inviati al backend:", {
+        nome: form.nome,
+        telefono: form.telefono,
+        email: form.email,
+        persone: parseInt(form.persone),
+        data: form.data,
+        ora: form.ora,
+        richieste: form.richieste,
+      });
+      dispatch(createPrenotazione(form));
     } else {
       console.log("Errori:", validationErrors);
       setErrors(validationErrors);

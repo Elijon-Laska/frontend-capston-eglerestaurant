@@ -8,6 +8,10 @@ $light: #d8dee9;
 $dark: #2e3440;
 $body-bg: #eceff4;
 $body-color: $dark;
-$font-family-base: "Copperplate", "Papyrus", "Brush Script MT", cursive, sans-serif;
+$font-family-base: system-ui, -apple-system, sans-serif;
+
+h1, h2, h3, h4 {
+  font-family: "Papyrus", "Brush Script MT", cursive, sans-serif;
+}
 
 @import "bootstrap/scss/bootstrap";

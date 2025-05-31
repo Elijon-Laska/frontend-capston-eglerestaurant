@@ -1,77 +1,74 @@
 export const fetchDishes = () => async (dispatch) => {
   try {
-    dispatch({ type: 'FETCH_DISHES_REQUEST' });
-    
-    console.log('Fetching dishes from backend...');
-    
-    // Set up the base URL for the backend API
-    const baseUrl = 'http://localhost:8080';
-    
-    // Fetch dishes by category using fetch API with proper headers
+    dispatch({ type: "FETCH_DISHES_REQUEST" });
+
+    console.log("piatti fetchati dal backend...");
+
+    const baseUrl = "http://localhost:8080";
+
     const [antipastiRes, primiRes, secondiRes] = await Promise.all([
       fetch(`${baseUrl}/api/dishes/category/ANTIPASTI`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       }),
       fetch(`${baseUrl}/api/dishes/category/PRIMI`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       }),
       fetch(`${baseUrl}/api/dishes/category/SECONDI`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      })
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }),
     ]);
 
-    // Check if responses are successful
     if (!antipastiRes.ok || !primiRes.ok || !secondiRes.ok) {
-      throw new Error('API response not successful');
+      throw new Error("Richiesta API Fallita ");
     }
 
     const [antipastiData, primiData, secondiData] = await Promise.all([
       antipastiRes.json(),
       primiRes.json(),
-      secondiRes.json()
+      secondiRes.json(),
     ]);
 
-    console.log('Antipasti data:', antipastiData);
-    console.log('Primi data:', primiData);
-    console.log('Secondi data:', secondiData);
+    console.log("Antipasti data:", antipastiData);
+    console.log("Primi data:", primiData);
+    console.log("Secondi data:", secondiData);
 
     dispatch({
-      type: 'FETCH_DISHES_SUCCESS',
+      type: "FETCH_DISHES_SUCCESS",
       payload: {
         antipasti: antipastiData,
         primi: primiData,
-        secondi: secondiData
-      }
+        secondi: secondiData,
+      },
     });
-    console.log('Successfully fetched dishes:', {
+    console.log("Piatti fetchati con successo:", {
       antipasti: antipastiData,
       primi: primiData,
-      secondi: secondiData
+      secondi: secondiData,
     });
   } catch (error) {
-    console.error('Failed to fetch dishes:', error);
+    console.error("Fetch dei piatti fallita:", error);
     dispatch({
-      type: 'FETCH_DISHES_FAILURE',
-      payload: error.message
+      type: "FETCH_DISHES_FAILURE",
+      payload: error.message,
     });
   }
 };
 
 export const showDishDetails = (dish) => (dispatch) => {
   dispatch({
-    type: 'SHOW_DISH_DETAILS',
-    payload: dish
+    type: "SHOW_DISH_DETAILS",
+    payload: dish,
   });
 };
