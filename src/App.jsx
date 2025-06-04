@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CustomNavbar from "./components/navbar/navbar";
 import { Spinner, Alert } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import DashboardAdmin from "./components/DashboardAdmin";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -71,6 +72,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/contatti" element={<ContattiPage />} />
           <Route path="/menu" element={<MenuPage />} />
+          <Route path="/admin" element={<DashboardAdmin />} />
+
           {/* qui si possono aggiungiere altre route  */}
         </Routes>
       </div>

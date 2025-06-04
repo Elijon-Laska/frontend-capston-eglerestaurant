@@ -13,11 +13,13 @@ import ModaleRegistrazione from "../modals/ModaleRegistrazione";
 import ModalePrenotazione from "../modals/ModalePrenotazione";
 import DishDetailsModal from "../modals/DishDetailsModal";
 import { Link } from "react-router-dom";
+import NavbarAdmin from "./NavbarAdmin";
 
 const CustomNavbar = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { dishes, loading } = useSelector((state) => state.dishes);
+  const isAdmin = user?.roles?.includes("ROLE_ADMIN");
 
   useEffect(() => {
     dispatch(fetchDishes());
@@ -125,7 +127,13 @@ const CustomNavbar = () => {
               </Nav.Link>
               {user ? (
                 <NavDropdown title={` ${user.nome} ${user.cognome}`} id="user-dropdown" menuVariant="dark">
-                  <NavDropdown.Item onClick={() => dispatch({ type: "LOGOUT" })}>
+                  <NavDropdown.Item
+                    onClick={() => {
+                      localStorage.removeItem("token"); // <-- cancella il token JWT
+                      dispatch({ type: "LOGOUT" });
+                      window.location.href = "/";
+                    }}
+                  >
                     <div className="d-flex align-items-center">
                       <span className="me-2">Logout</span>
                     </div>
@@ -136,7 +144,7 @@ const CustomNavbar = () => {
                   style={{ fontWeight: "bold", color: "#FFD700" }}
                   onClick={() => dispatch(showRegisterModal())}
                 >
-                  Log-in/Registrati
+                  Registrati/Log-in
                 </Nav.Link>
               )}
             </Nav>
@@ -150,6 +158,7 @@ const CustomNavbar = () => {
           </Button>
         </Container>
       </Navbar>
+      {isAdmin && <NavbarAdmin />}
       <ModalePrenotazione />
       <ModaleRegistrazione />
       <DishDetailsModal />

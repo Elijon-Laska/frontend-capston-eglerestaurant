@@ -8,7 +8,7 @@ import { showPrenotazioneModal } from "../../redux/actions";
 const Header = () => {
   const dispatch = useDispatch();
   return (
-    <Card className=" header-card-img bg-transparent text-color-custom * text-center">
+    <Card className=" header-card-img bg-transparent text-color-custom * text-center  ">
       <Card.Img variant="top" src={logo} />
       <Card.Body>
         <Card.Title>

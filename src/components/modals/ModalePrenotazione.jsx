@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { hidePrenotazioneModal, createPrenotazione } from "../../redux/actions";
 import { useState } from "react";
 import FormValidator from "../common/FormValidator";
+import { fetchAdminDashboard } from "../../redux/actions/adminActions";
 
 const ModalePrenotazione = () => {
   const show = useSelector((state) => state.prenotazione.showPrenotazioneModal);
@@ -48,6 +49,7 @@ const ModalePrenotazione = () => {
         richieste: form.richieste,
       });
       dispatch(createPrenotazione(form));
+      dispatch(fetchAdminDashboard());
     } else {
       console.log("Errori:", validationErrors);
       setErrors(validationErrors);

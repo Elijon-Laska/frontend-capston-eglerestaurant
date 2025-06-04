@@ -1,6 +1,6 @@
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Trash } from "react-bootstrap-icons";
+
 import "./MenuPage.css";
 
 const MenuPage = () => {
@@ -15,14 +15,8 @@ const MenuPage = () => {
             <Card.Title>{dish.name}</Card.Title>
             <Card.Text className="text-success">{dish.price}€</Card.Text>
             <Card.Text>{dish.composition}</Card.Text>
-            <Card.Text>{dish.descrizione || "Nessuna descrizione disponibile"}</Card.Text>
+            {/*<Card.Text>{dish.descrizione || "Nessuna descrizione disponibile"}</Card.Text>*/}
           </Card.Body>
-          <Card.Footer className="d-flex flex-nowrap justify-content-end align-items-center">
-            <Button variant="danger" className="me-1">
-              <Trash />
-            </Button>
-            <Button variant="secondary">Modifica</Button>
-          </Card.Footer>
         </Card>
       </Col>
     ));
