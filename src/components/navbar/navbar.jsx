@@ -39,7 +39,7 @@ const CustomNavbar = () => {
                 {loading ? (
                   <NavDropdown.Item>Loading...</NavDropdown.Item>
                 ) : (
-                  dishes.antipasti.map((dish, index) => (
+                  (dishes.ANTIPASTI || []).map((dish, index) => (
                     <NavDropdown.Item
                       key={dish.id || index}
                       onClick={() => dispatch(showDishDetails(dish))}
@@ -64,7 +64,7 @@ const CustomNavbar = () => {
                 {loading ? (
                   <NavDropdown.Item>Loading...</NavDropdown.Item>
                 ) : (
-                  dishes.primi.map((dish, index) => (
+                  (dishes.PRIMI || []).map((dish, index) => (
                     <NavDropdown.Item
                       key={dish.id || index}
                       onClick={() => dispatch(showDishDetails(dish))}
@@ -89,7 +89,7 @@ const CustomNavbar = () => {
                 {loading ? (
                   <NavDropdown.Item>Loading...</NavDropdown.Item>
                 ) : (
-                  dishes.secondi.map((dish, index) => (
+                  (dishes.SECONDI || []).map((dish, index) => (
                     <NavDropdown.Item
                       key={dish.id || index}
                       onClick={() => dispatch(showDishDetails(dish))}
@@ -129,7 +129,7 @@ const CustomNavbar = () => {
                 <NavDropdown title={` ${user.nome} ${user.cognome}`} id="user-dropdown" menuVariant="dark">
                   <NavDropdown.Item
                     onClick={() => {
-                      localStorage.removeItem("token"); // <-- cancella il token JWT
+                      localStorage.removeItem("token"); // Cancella il token JWT
                       dispatch({ type: "LOGOUT" });
                       window.location.href = "/";
                     }}

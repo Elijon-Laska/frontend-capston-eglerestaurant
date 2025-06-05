@@ -5,7 +5,13 @@ import "./CaroselFoto.css";
 
 const LeNostreDelizie = () => {
   const { dishes } = useSelector((state) => state.dishes);
-  const allDishes = [...dishes.antipasti, ...dishes.primi, ...dishes.secondi];
+  const allDishes = [
+    ...(dishes.ANTIPASTI || []),
+    ...(dishes.PRIMI || []),
+    ...(dishes.SECONDI || []),
+    ...(dishes.CONTORNI || []),
+    ...(dishes.DOLCI || []),
+  ];
   const images = allDishes.map((dish) => dish.imageUrl).filter(Boolean);
 
   function arrayScomposto(arr, size) {
@@ -32,11 +38,7 @@ const LeNostreDelizie = () => {
             <Row className="justify-content-center flex-nowrap" style={{ overflow: "hidden" }}>
               {group.map((img, i) => (
                 <Col key={i} className="d-flex justify-content-center align-items-center col-md-3">
-                  <img
-                    src={img}
-                    alt={`Delizia ${idx * 4 + i + 1}`}
-                    className="carousel-item-img"
-                  />
+                  <img src={img} alt={`Delizia ${idx * 4 + i + 1}`} className="carousel-item-img" />
                 </Col>
               ))}
             </Row>

@@ -53,7 +53,7 @@ const NavbarAdmin = () => {
             </Nav.Link>
           </Nav>
           <Nav.Link as={Link} to="/admin" className="d-flex align-items-center ms-auto me-5">
-            <HouseDoor className="me-1" /> Dashboard
+            <HouseDoor className="me-1" /> Amministrazione
           </Nav.Link>
 
           {/*  Indicatore di stato 

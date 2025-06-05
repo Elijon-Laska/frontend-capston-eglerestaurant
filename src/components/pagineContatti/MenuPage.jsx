@@ -36,7 +36,7 @@ const MenuPage = () => {
           <h1> Antipasti</h1>
         </Col>
         <Col xs={12}>
-          <Row className="menu-row">{renderDishes("antipasti")}</Row>
+          <Row className="menu-row">{renderDishes("ANTIPASTI")}</Row>
         </Col>
       </Row>
 
@@ -45,7 +45,7 @@ const MenuPage = () => {
           <h1>Primi</h1>
         </Col>
         <Col xs={12}>
-          <Row className="menu-row">{renderDishes("primi")}</Row>
+          <Row className="menu-row">{renderDishes("PRIMI")}</Row>
         </Col>
       </Row>
 
@@ -54,7 +54,7 @@ const MenuPage = () => {
           <h1>Secondi</h1>
         </Col>
         <Col xs={12}>
-          <Row className="menu-row">{renderDishes("secondi")}</Row>
+          <Row className="menu-row">{renderDishes("SECONDI")}</Row>
         </Col>
       </Row>
 
@@ -63,9 +63,7 @@ const MenuPage = () => {
           <h1>Contorni</h1>
         </Col>
         <Col xs={12}>
-          <div className="placeholder-message">
-            <p>Futuri Contorni</p>
-          </div>
+          <Row className="menu-row">{renderDishes("CONTORNI")}</Row>
         </Col>
       </Row>
 
@@ -74,9 +72,7 @@ const MenuPage = () => {
           <h1>Dolci</h1>
         </Col>
         <Col xs={12}>
-          <div className="placeholder-message">
-            <p>Futuri Dolci</p>
-          </div>
+          <Row className="menu-row">{renderDishes("DOLCI")}</Row>
         </Col>
       </Row>
     </Container>

@@ -1,50 +1,54 @@
 const initialState = {
   dishes: {
-    antipasti: [],
-    primi: [],
-    secondi: []
+    ANTIPASTI: [],
+    PRIMI: [],
+    SECONDI: [],
+    CONTORNI: [],
+    DOLCI: [],
   },
   loading: false,
   error: null,
   selectedDish: null,
-  showDishDetails: false
+  showDishDetails: false,
 };
 
 const dishesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCH_DISHES_REQUEST':
+    case "FETCH_DISHES_REQUEST":
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
-    case 'FETCH_DISHES_SUCCESS':
+    case "FETCH_DISHES_SUCCESS":
       return {
         ...state,
         loading: false,
         dishes: {
-          antipasti: action.payload.antipasti,
-          primi: action.payload.primi,
-          secondi: action.payload.secondi
-        }
+          ANTIPASTI: action.payload.antipasti,
+          PRIMI: action.payload.primi,
+          SECONDI: action.payload.secondi,
+          CONTORNI: action.payload.contorni,
+          DOLCI: action.payload.dolci,
+        },
       };
-    case 'SHOW_DISH_DETAILS':
+    case "SHOW_DISH_DETAILS":
       return {
         ...state,
         selectedDish: action.payload,
-        showDishDetails: true
+        showDishDetails: true,
       };
-    case 'CLOSE_DISH_DETAILS':
+    case "CLOSE_DISH_DETAILS":
       return {
         ...state,
         selectedDish: null,
-        showDishDetails: false
+        showDishDetails: false,
       };
-    case 'FETCH_DISHES_FAILURE':
+    case "FETCH_DISHES_FAILURE":
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       };
     default:
       return state;

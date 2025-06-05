@@ -138,6 +138,9 @@ export const deleteCategory = (categoryId) => async (dispatch) => {
 export const createDish = (dishData, imageFile) => async (dispatch) => {
   try {
     dispatch({ type: "CREATE_DISH_REQUEST" });
+    if (!dishData.name || !dishData.composition || !dishData.price || !dishData.categoryType) {
+      throw new Error("Tutti i campi sono obbligatori");
+    }
 
     const token = localStorage.getItem("token");
     const formData = new FormData();
@@ -171,18 +174,24 @@ export const createDish = (dishData, imageFile) => async (dispatch) => {
 };
 
 // - updateDish
-export const updateDish = (dishId, dishData) => async (dispatch) => {
+export const updateDish = (dishId, dishData, imageFile) => async (dispatch) => {
   try {
     dispatch({ type: "UPDATE_DISH_REQUEST" });
 
     const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("dish", JSON.stringify(dishData));
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
+
     const response = await fetch(`http://localhost:8080/api/dishes/${dishId}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+        // NON mettere Content-Type, FormData lo gestisce da solo!
       },
-      body: JSON.stringify(dishData),
+      body: formData,
     });
 
     if (!response.ok) {
@@ -231,58 +240,105 @@ export const deleteDish = (dishId) => async (dispatch) => {
 };
 // - confirmReservation
 export const confirmReservation = (reservationCode) => async (dispatch) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Sessione scaduta. Fai di nuovo login come admin.");
+    return;
+  }
   try {
-    dispatch({ type: "CONFIRM_RESERVATION_REQUEST" });
-
-    const token = localStorage.getItem("token");
     const response = await fetch(`http://localhost:8080/api/prenotazioni/${reservationCode}/conferma`, {
       method: "PUT",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
 
+    let payload;
+    const contentType = response.headers.get("content-type");
+
     if (!response.ok) {
-      throw new Error("Errore nella conferma della prenotazione");
+      // Leggi il body solo una volta!
+      if (contentType && contentType.includes("application/json")) {
+        const errorJson = await response.json();
+        throw new Error(errorJson.message || JSON.stringify(errorJson));
+      } else {
+        const errorText = await response.text();
+        throw new Error(errorText || "Errore nella conferma della prenotazione");
+      }
+    }
+
+    // Successo: leggi il body solo una volta!
+    if (contentType && contentType.includes("application/json")) {
+      payload = await response.json();
+    } else {
+      payload = await response.text();
+      if (!payload) payload = "Prenotazione confermata!";
     }
 
     dispatch({
       type: "CONFIRM_RESERVATION_SUCCESS",
-      payload: await response.json(),
+      payload,
     });
+    alert(payload);
+    dispatch(fetchAdminDashboard());
   } catch (error) {
     dispatch({
       type: "CONFIRM_RESERVATION_FAILURE",
       payload: error.message,
     });
+    alert(error.message);
   }
 };
 // - cancelReservation
 export const cancelReservation = (reservationCode) => async (dispatch) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Sessione scaduta. Fai di nuovo login come admin.");
+    return;
+  }
   try {
-    dispatch({ type: "CANCEL_RESERVATION_REQUEST" });
-
-    const token = localStorage.getItem("token");
     const response = await fetch(`http://localhost:8080/api/prenotazioni/${reservationCode}/annulla`, {
       method: "PUT",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
 
+    let payload;
+    const contentType = response.headers.get("content-type");
+
     if (!response.ok) {
-      throw new Error("Errore nell'annullamento della prenotazione");
+      // Leggi il body solo una volta!
+      if (contentType && contentType.includes("application/json")) {
+        const errorJson = await response.json();
+        throw new Error(errorJson.message || JSON.stringify(errorJson));
+      } else {
+        const errorText = await response.text();
+        throw new Error(errorText || "Errore nell'annullamento della prenotazione");
+      }
+    }
+
+    // Successo: leggi il body solo una volta!
+    if (contentType && contentType.includes("application/json")) {
+      payload = await response.json();
+    } else {
+      payload = await response.text();
     }
 
     dispatch({
       type: "CANCEL_RESERVATION_SUCCESS",
-      payload: await response.json(),
+      payload,
     });
+    alert(payload);
+    dispatch(fetchAdminDashboard());
   } catch (error) {
     dispatch({
       type: "CANCEL_RESERVATION_FAILURE",
       payload: error.message,
     });
+    alert(error.message);
   }
 };
 // -getReservation

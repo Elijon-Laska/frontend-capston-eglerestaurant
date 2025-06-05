@@ -1,4 +1,4 @@
-import { Modal, Button, Form, Row, Col, FloatingLabel } from "react-bootstrap";
+import { Modal, Button, Form, Row, Col, FloatingLabel, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { hidePrenotazioneModal, createPrenotazione } from "../../redux/actions";
 import { useState } from "react";
@@ -6,6 +6,8 @@ import FormValidator from "../common/FormValidator";
 import { fetchAdminDashboard } from "../../redux/actions/adminActions";
 
 const ModalePrenotazione = () => {
+  const prenotazioneError = useSelector((state) => state.prenotazione.error);
+  const prenotazioneSuccess = useSelector((state) => state.prenotazione.success);
   const show = useSelector((state) => state.prenotazione.showPrenotazioneModal);
   const dispatch = useDispatch();
 
@@ -64,6 +66,24 @@ const ModalePrenotazione = () => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="bg-light">
+        {prenotazioneSuccess && (
+          <div className="mb-3">
+            <Alert variant="success">
+              {typeof prenotazioneSuccess === "string" ? prenotazioneSuccess : prenotazioneSuccess?.message}
+            </Alert>
+          </div>
+        )}
+        {prenotazioneError && typeof prenotazioneError === "string" && prenotazioneError.trim() !== "" && (
+          <div className="mb-3">
+            <Alert variant="danger">{prenotazioneError}</Alert>
+          </div>
+        )}
+        {prenotazioneError && typeof prenotazioneError === "object" && prenotazioneError.error && (
+          <div className="mb-3">
+            <Alert variant="danger">{prenotazioneError.error}</Alert>
+          </div>
+        )}
+
         <Form onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Col>

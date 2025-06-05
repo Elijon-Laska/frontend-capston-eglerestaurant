@@ -16,6 +16,7 @@ import { Button, Card, Container, Row, Col, Table, Modal, Form, Spinner } from "
 import { FaPlus, FaCheck, FaTimes, FaUpload, FaUtensils, FaCalendarCheck, FaUserShield } from "react-icons/fa";
 import { updateCategory, updateDish } from "../redux/actions/adminActions";
 import { Navigate } from "react-router";
+import { fetchDishes } from "../redux/actions/dishesActions";
 
 const DashboardAdmin = () => {
   const dispatch = useDispatch();
@@ -47,12 +48,14 @@ const DashboardAdmin = () => {
     setDishImage(e.target.files[0]);
   };
 
-  const handleDishSubmit = (e) => {
+  const handleDishSubmit = async (e) => {
     e.preventDefault();
     if (selectedDish) {
-      dispatch(updateDish(selectedDish.id, dishData, dishImage));
+      await dispatch(updateDish(selectedDish.id, dishData, dishImage));
+      await dispatch(fetchDishes());
     } else {
-      dispatch(createDish(dishData, dishImage));
+      await dispatch(createDish(dishData, dishImage));
+      await dispatch(fetchDishes());
     }
     handleClose();
   };
@@ -112,7 +115,7 @@ const DashboardAdmin = () => {
       dispatch(fetchUsers());
     }
   }, [isAdmin, dispatch]);
-  console.log("Categorie disponibili:", adminState.categories);
+
   if (!isAdmin) {
     return <Navigate to="/" />;
   }
@@ -123,21 +126,21 @@ const DashboardAdmin = () => {
         {/* Header */}
         <Row className="mb-4">
           <Col>
-            <h1 className="mb-4">Dashboard Amministratore</h1>
+            <h1 className="my-4">Dashboard Amministratore</h1>
             <div className="d-flex justify-content-between align-items-center mb-4">
               <div>
-                <Button variant="primary" onClick={() => handleShow("category")} className="me-2">
+                <Button variant="primary" onClick={() => handleShow("category")} className="my-2 mx-2">
                   <FaPlus className="me-2" /> Nuova Categoria
                 </Button>
-                <Button variant="primary" onClick={() => handleShow("dish")} className="me-2">
+                <Button variant="primary" onClick={() => handleShow("dish")} className="my-2 mx-2">
                   <FaPlus className="me-2" /> Nuovo Piatto
                 </Button>
-                <Button variant="primary" onClick={() => handleShow("image")}>
+                <Button variant="primary" onClick={() => handleShow("image")} className="my-2 mx-2">
                   <FaUpload className="me-2" /> Carica Immagine
                 </Button>
               </div>
               <div>
-                {adminState.loading && <Spinner animation="border" variant="primary" size="sm" className="me-2" />}
+                {adminState.loading && <Spinner animation="border" variant="primary" size="sm" className="m-2" />}
                 {adminState.error && (
                   <span className="text-danger">
                     <FaTimes className="me-2" />
@@ -157,8 +160,7 @@ const DashboardAdmin = () => {
 
         {/* Sezioni principali */}
         <Row>
-          {/* Categorie */}
-          <Col md={4}>
+          <Col xs={12} md={6} lg={6} xl={6} className="my-2">
             <Card>
               <Card.Header>
                 <h3 className="mb-0">
@@ -172,21 +174,23 @@ const DashboardAdmin = () => {
                       <tr key={category.id}>
                         <td>{category.categoryType}</td>
                         <td>
-                          <Button
-                            variant="outline-primary"
-                            size="sm"
-                            onClick={() => handleShow("category")}
-                            className="me-2"
-                          >
-                            Modifica
-                          </Button>
-                          <Button
-                            variant="outline-danger"
-                            size="sm"
-                            onClick={() => dispatch(deleteCategory(category.id))}
-                          >
-                            Elimina
-                          </Button>
+                          <div className="d-flex justify-content-end">
+                            <Button
+                              variant="outline-secondary"
+                              size="sm"
+                              onClick={() => handleShow("category")}
+                              className="me-2"
+                            >
+                              Modifica
+                            </Button>
+                            <Button
+                              variant="outline-danger"
+                              size="sm"
+                              onClick={() => dispatch(deleteCategory(category.id))}
+                            >
+                              Elimina
+                            </Button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -197,7 +201,7 @@ const DashboardAdmin = () => {
           </Col>
 
           {/* Piatti */}
-          <Col md={4}>
+          <Col xs={12} md={6} lg={6} xl={6} className="my-2">
             <Card>
               <Card.Header>
                 <h3 className="mb-0">
@@ -210,19 +214,28 @@ const DashboardAdmin = () => {
                     {adminState.dishes.map((dish) => (
                       <tr key={dish.id}>
                         <td>{dish.name}</td>
-                        <td>{dish.category}</td>
+                        <td>{dish.categoryType}</td>
                         <td>
-                          <Button
-                            variant="outline-primary"
-                            size="sm"
-                            onClick={() => handleShow("dish")}
-                            className="me-2"
-                          >
-                            Modifica
-                          </Button>
-                          <Button variant="outline-danger" size="sm" onClick={() => dispatch(deleteDish(dish.id))}>
-                            Elimina
-                          </Button>
+                          <div className="d-flex justify-content-end">
+                            <Button
+                              variant="outline-secondary"
+                              size="sm"
+                              onClick={() => handleShow("dish")}
+                              className="me-2"
+                            >
+                              Modifica
+                            </Button>
+                            <Button
+                              variant="outline-danger"
+                              size="sm"
+                              onClick={async () => {
+                                await dispatch(deleteDish(dish.id));
+                                await dispatch(fetchDishes());
+                              }}
+                            >
+                              Elimina
+                            </Button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -233,7 +246,7 @@ const DashboardAdmin = () => {
           </Col>
 
           {/* Prenotazioni */}
-          <Col md={4}>
+          <Col xs={12} md={12} lg={12} xl={12} className="my-2">
             <Card>
               <Card.Header>
                 <h3 className="mb-0">
@@ -246,6 +259,7 @@ const DashboardAdmin = () => {
                     <tr>
                       <th>Nome</th>
                       <th>Data</th>
+                      <th>Coperti</th>
                       <th>Stato</th>
                       <th>Azioni</th>
                     </tr>
@@ -255,29 +269,36 @@ const DashboardAdmin = () => {
                       <tr key={reservation.id}>
                         <td>{reservation.nome}</td>
                         <td>{reservation.data}</td>
+                        <td>{reservation.persone}</td>
                         <td>
-                          <span className={`badge bg-${reservation.stato === "CONFERMATA" ? "success" : "warning"}`}>
-                            {reservation.stato}
+                          <span
+                            className={`badge bg-${
+                              reservation.annullata ? "danger" : reservation.confermata ? "success" : "warning"
+                            }`}
+                          >
+                            {reservation.annullata ? "ANNULLATA" : reservation.confermata ? "CONFERMATA" : "IN ATTESA"}
                           </span>
                         </td>
                         <td>
-                          <Button
-                            variant="outline-success"
-                            size="sm"
-                            onClick={() => dispatch(confirmReservation(reservation.id))}
-                            disabled={reservation.stato === "CONFERMATA"}
-                          >
-                            Conferma
-                          </Button>
-                          <Button
-                            variant="outline-danger"
-                            size="sm"
-                            className="ms-2"
-                            onClick={() => dispatch(cancelReservation(reservation.id))}
-                            disabled={reservation.stato === "ANNULLATA"}
-                          >
-                            Annulla
-                          </Button>
+                          <div className="d-flex justify-content-end">
+                            <Button
+                              variant="outline-success"
+                              size="sm"
+                              onClick={() => dispatch(confirmReservation(reservation.codicePrenotazione))}
+                              disabled={reservation.stato === "CONFERMATA"}
+                            >
+                              Conferma
+                            </Button>
+                            <Button
+                              variant="outline-danger"
+                              size="sm"
+                              className="ms-2"
+                              onClick={() => dispatch(cancelReservation(reservation.codicePrenotazione))}
+                              disabled={reservation.stato === "ANNULLATA"}
+                            >
+                              Annulla
+                            </Button>
+                          </div>
                         </td>
                       </tr>
                     ))}

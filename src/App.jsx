@@ -8,19 +8,27 @@ import CustomNavbar from "./components/navbar/navbar";
 import { Spinner, Alert } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import DashboardAdmin from "./components/DashboardAdmin";
+import { getCurrentUser } from "./redux/actions";
+import { useDispatch } from "react-redux";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(getCurrentUser());
+    }
+
     const timer = setTimeout(() => {
       // setError("Errore di caricamento dati! Riprova più tardi."); // Scommentare per testare l'errore
       setLoading(false);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [dispatch]);
 
   if (loading) {
     return (

@@ -135,27 +135,33 @@ export const createPrenotazione = (prenotazioneData) => async (dispatch) => {
     dispatch(setError(null, "prenotazione"));
     dispatch(setSuccess(null, "prenotazione"));
 
-    const token = localStorage.getItem("token");
-    if (!token) throw new Error("Utente non autenticato");
-
     const response = await fetch("http://localhost:8080/api/prenotazioni", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(prenotazioneData),
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Errore durante la prenotazione");
+      const errorText = await response.text();
+      dispatch(setSuccess(null, "prenotazione"));
+      throw new Error(errorText || "Errore durante la prenotazione");
     }
-
-    dispatch(setSuccess("Prenotazione avvenuta con successo!", "prenotazione"));
-    dispatch(hidePrenotazioneModal());
+    dispatch(setError(null, "prenotazione"));
+    dispatch(
+      setSuccess(
+        "Prenotazione avvenuta con successo! Riceverai una email di conferma all'indirizzo inserito.",
+        "Continua a dare un occhiata al nostro sito per altre novità!",
+        "prenotazione"
+      )
+    );
+    setTimeout(() => {
+      dispatch(hidePrenotazioneModal());
+    }, 5000);
   } catch (error) {
     dispatch(setError(error.message, "prenotazione"));
+    dispatch(setSuccess(null, "prenotazione"));
   } finally {
     dispatch(setLoading(false, "prenotazione"));
   }

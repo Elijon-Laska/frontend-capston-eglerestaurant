@@ -6,7 +6,7 @@ export const fetchDishes = () => async (dispatch) => {
 
     const baseUrl = "http://localhost:8080";
 
-    const [antipastiRes, primiRes, secondiRes] = await Promise.all([
+    const [antipastiRes, primiRes, secondiRes, contorniRes, dolciRes] = await Promise.all([
       fetch(`${baseUrl}/api/dishes/category/ANTIPASTI`, {
         method: "GET",
         headers: {
@@ -28,21 +28,39 @@ export const fetchDishes = () => async (dispatch) => {
           Accept: "application/json",
         },
       }),
+      fetch(`${baseUrl}/api/dishes/category/CONTORNI`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }),
+      fetch(`${baseUrl}/api/dishes/category/DOLCI`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }),
     ]);
 
-    if (!antipastiRes.ok || !primiRes.ok || !secondiRes.ok) {
+    if (!antipastiRes.ok || !primiRes.ok || !secondiRes.ok || !contorniRes.ok || !dolciRes.ok) {
       throw new Error("Richiesta API Fallita ");
     }
 
-    const [antipastiData, primiData, secondiData] = await Promise.all([
+    const [antipastiData, primiData, secondiData, contorniData, dolciData] = await Promise.all([
       antipastiRes.json(),
       primiRes.json(),
       secondiRes.json(),
+      contorniRes.json(),
+      dolciRes.json(),
     ]);
 
-    console.log("Antipasti data:", antipastiData);
-    console.log("Primi data:", primiData);
-    console.log("Secondi data:", secondiData);
+    console.log("ANTIPASTI data:", antipastiData);
+    console.log("PRIMI data:", primiData);
+    console.log("SECONDI data:", secondiData);
+    console.log("CONTORNI data:", contorniData);
+    console.log("DOLCI data:", dolciData);
 
     dispatch({
       type: "FETCH_DISHES_SUCCESS",
@@ -50,6 +68,8 @@ export const fetchDishes = () => async (dispatch) => {
         antipasti: antipastiData,
         primi: primiData,
         secondi: secondiData,
+        contorni: contorniData,
+        dolci: dolciData,
       },
     });
     console.log("Piatti fetchati con successo:", {
