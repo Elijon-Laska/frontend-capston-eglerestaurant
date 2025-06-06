@@ -189,13 +189,13 @@ export const updateDish = (dishId, dishData, imageFile) => async (dispatch) => {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
-        // NON mettere Content-Type, FormData lo gestisce da solo!
       },
       body: formData,
     });
 
     if (!response.ok) {
-      throw new Error("Errore nell'aggiornamento del piatto");
+      const errorText = await response.text();
+      throw new Error("Errore nell'aggiornamento del piatto " + errorText);
     }
 
     dispatch({
@@ -400,6 +400,29 @@ export const uploadImage = (file) => async (dispatch) => {
     });
   }
 };
+export const deleteImage = (imageUrl) => async (dispatch) => {
+  try {
+    dispatch({ type: "DELETE_IMAGE_REQUEST" });
+
+    const token = localStorage.getItem("token");
+    const response = await fetch(`http://localhost:8080/api/images/${imageUrl}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) throw new Error("Errore nell'eliminazione dell'immagine");
+
+    dispatch({
+      type: "DELETE_IMAGE_SUCCESS",
+      payload: imageUrl,
+    });
+  } catch (error) {
+    dispatch({
+      type: "DELETE_IMAGE_FAILURE",
+      payload: error.message,
+    });
+  }
+};
 // Actions per la gestione degli utenti
 export const fetchUsers = () => async (dispatch) => {
   try {
@@ -427,6 +450,7 @@ export const fetchUsers = () => async (dispatch) => {
       activeUsersRes.json(),
       blockedUsersRes.json(),
     ]);
+    console.log("USERS:", users, activeUsers, blockedUsers);
 
     dispatch({
       type: "FETCH_USERS_SUCCESS",

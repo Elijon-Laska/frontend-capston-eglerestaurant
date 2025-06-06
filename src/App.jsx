@@ -10,6 +10,10 @@ import { useEffect, useState } from "react";
 import DashboardAdmin from "./components/DashboardAdmin";
 import { getCurrentUser } from "./redux/actions";
 import { useDispatch } from "react-redux";
+import PrenotazioniPage from "./components/admin/PrenotazioniPage";
+import UtentiPage from "./components/admin/UtentiPage";
+import ImmaginiPage from "./components/admin/ImmaginiPage";
+import Piatti from "./components/admin/Piatti";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -81,6 +85,10 @@ function App() {
           <Route path="/contatti" element={<ContattiPage />} />
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/admin" element={<DashboardAdmin />} />
+          <Route path="/admin/prenotazioni" element={<PrenotazioniPage />} />
+          <Route path="/admin/utenti" element={<UtentiPage />} />
+          <Route path="/admin/immagini" element={<ImmaginiPage />} />
+          <Route path="/admin/piatti" element={<Piatti />} />
 
           {/* qui si possono aggiungiere altre route  */}
         </Routes>

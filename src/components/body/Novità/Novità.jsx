@@ -3,7 +3,7 @@ import logo from "../../../assets/egle-logo-1.PNG";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import pranzoImg from "../../../assets/novità/pranzo.jpg";
-import "./Novità.css";
+
 import vinoImg from "../../../assets/novità/vino.avif";
 import aperitivoImg from "../../../assets/novità/aperitivo.jpg";
 

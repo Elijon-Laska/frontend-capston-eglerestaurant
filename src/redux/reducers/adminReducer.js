@@ -176,6 +176,7 @@ const adminReducer = (state = initialState, action) => {
 
     // Immagini
     case "UPLOAD_IMAGE_REQUEST":
+    case "DELETE_IMAGE_REQUEST":
       return {
         ...state,
         imageUpload: {
@@ -196,6 +197,7 @@ const adminReducer = (state = initialState, action) => {
         },
       };
     case "UPLOAD_IMAGE_FAILURE":
+    case "DELETE_IMAGE_FAILURE":
       return {
         ...state,
         imageUpload: {
@@ -241,24 +243,28 @@ const adminReducer = (state = initialState, action) => {
         error: null,
         success: null,
       };
-    case "BLOCK_USER_SUCCESS":
+    case "BLOCK_USER_SUCCESS": {
+      const blockedUser = state.users.find((user) => user.id === action.payload);
       return {
         ...state,
         loading: false,
         users: state.users.map((user) => (user.id === action.payload ? { ...user, isBlocked: true } : user)),
-        blockedUsers: [...state.blockedUsers, action.payload],
+        blockedUsers: blockedUser ? [...state.blockedUsers, { ...blockedUser, isBlocked: true }] : state.blockedUsers,
         activeUsers: state.activeUsers.filter((user) => user.id !== action.payload),
         success: "Utente bloccato con successo",
       };
-    case "UNBLOCK_USER_SUCCESS":
+    }
+    case "UNBLOCK_USER_SUCCESS": {
+      const unblockedUser = state.users.find((user) => user.id === action.payload);
       return {
         ...state,
         loading: false,
         users: state.users.map((user) => (user.id === action.payload ? { ...user, isBlocked: false } : user)),
         blockedUsers: state.blockedUsers.filter((user) => user.id !== action.payload),
-        activeUsers: [...state.activeUsers, action.payload],
+        activeUsers: unblockedUser ? [...state.activeUsers, { ...unblockedUser, isBlocked: false }] : state.activeUsers,
         success: "Utente sbloccato con successo",
       };
+    }
     case "DELETE_USER_SUCCESS":
       return {
         ...state,

@@ -37,18 +37,18 @@ const NavbarAdmin = () => {
               <NavDropdown.Item as={Link} to="/admin/categories">
                 <Check2Square className="me-2" /> Categorie
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/admin/dishes">
+              <NavDropdown.Item as={Link} to="/admin/Piatti">
                 <FaUtensils className="me-2" /> Piatti
               </NavDropdown.Item>
             </NavDropdown>
 
-            <Nav.Link as={Link} to="/admin/reservations">
+            <Nav.Link as={Link} to="/admin/prenotazioni">
               <FaCalendarCheck className="me-2" /> Prenotazioni
             </Nav.Link>
-            <Nav.Link as={Link} to="/admin/users">
+            <Nav.Link as={Link} to="/admin/utenti">
               <FaUsersCog className="me-2" /> Utenti
             </Nav.Link>
-            <Nav.Link as={Link} to="/admin/images">
+            <Nav.Link as={Link} to="/admin/immagini">
               <FaImages className="me-2" /> Immagini
             </Nav.Link>
           </Nav>
