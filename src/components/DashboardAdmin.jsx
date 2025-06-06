@@ -13,10 +13,11 @@ import {
   deleteDish,
 } from "../redux/actions/adminActions";
 import { Button, Card, Container, Row, Col, Table, Modal, Form, Spinner } from "react-bootstrap";
-import { FaPlus, FaCheck, FaTimes, FaUpload, FaUtensils, FaCalendarCheck, FaUserShield } from "react-icons/fa";
+import { FaPlus, FaCheck, FaTimes, FaUpload, FaUtensils, FaCalendarCheck } from "react-icons/fa";
 import { updateCategory, updateDish } from "../redux/actions/adminActions";
 import { Navigate } from "react-router";
 import { fetchDishes } from "../redux/actions/dishesActions";
+import { Check2Square } from "react-bootstrap-icons";
 
 const DashboardAdmin = () => {
   const dispatch = useDispatch();
@@ -164,7 +165,7 @@ const DashboardAdmin = () => {
             <Card>
               <Card.Header>
                 <h3 className="mb-0">
-                  <FaUserShield className="me-2" /> Categorie ({adminState.categories.length})
+                  <Check2Square className="me-2" /> Categorie ({adminState.categories.length})
                 </h3>
               </Card.Header>
               <Card.Body>
@@ -261,7 +262,7 @@ const DashboardAdmin = () => {
                       <th>Data</th>
                       <th>Coperti</th>
                       <th>Stato</th>
-                      <th>Azioni</th>
+                      <th className="d-flex justify-content-end">Azioni</th>
                     </tr>
                   </thead>
                   <tbody>

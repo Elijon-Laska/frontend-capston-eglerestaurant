@@ -1,3 +1,5 @@
+📌 Repository GitHub Backend: https://github.com/Elijon-Laska/backend_Capstone_EgleRestaurnat.git
+
 # Sinossi_del_Progetto_Capstone_Epicode_EGLE_amore_e_cucina
 
 💡 Sinossi del Progetto – Capstone Epicode
@@ -48,7 +50,11 @@ Hosting e Deployment: 📬
 
 🔗 Link Utili
 
-📌 Repository GitHub: https://github.com/Elijon-Laska/Sinossi_del_Progetto_Capstone_Epicode_EGLE_amore_e_cucina.git
+📌 Repository GitHub Sinossi: https://github.com/Elijon-Laska/Sinossi_del_Progetto_Capstone_Epicode_EGLE_amore_e_cucina.git
+
+📌 Repository GitHub Frontend: https://github.com/Elijon-Laska/frontend-capston-eglerestaurant.git
+
+📌 Repository GitHub Backend: https://github.com/Elijon-Laska/backend_Capstone_EgleRestaurnat.git
 
 📌 Demo online: ⏳
 

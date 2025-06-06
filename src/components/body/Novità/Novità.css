@@ -1,0 +1,9 @@
+.novità-img {
+  max-width: 70vh;
+  width: 160px;
+  height: 160px;
+  display: block;
+  margin-bottom: 2rem;
+  object-fit: cover;
+  object-position: top center;
+}
