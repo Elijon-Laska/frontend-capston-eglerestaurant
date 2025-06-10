@@ -1,5 +1,5 @@
 import { Col, Container, Image, Row } from "react-bootstrap";
-import logo from "../../../assets/egle-logo-1.png";
+import logo from "../../../assets/egle-logo-1.PNG";
 import "./Team.css";
 import direttoreImg from "../../../assets/team/direttore.jpg";
 import somelierImg from "../../../assets/team/somelier.jpg";
