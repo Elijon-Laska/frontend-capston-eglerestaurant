@@ -1,7 +1,11 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import StarRating from "./StarRating";
+{
+  /*import StarRating from "./StarRating";*/
+}
 import "./Recensioni.css";
-import { useState } from "react";
+{
+  /*import { useState } from "react";*/
+}
 
 const recensioni = [
   { nome: "Mario Rossi", rating: 5, testo: "Ottimo ristorante, servizio impeccabile!" },
@@ -11,7 +15,30 @@ const recensioni = [
 ];
 
 const Recensioni = () => {
-  const [selectedStar, setSelectedStar] = useState(0);
+  {
+    return (
+      <div className="fw-bold text-center mb-5 mt-5">
+        <Container fluid>
+          <h1 className="text-center mb-4 fw-bold">Cosa dicono di noi</h1>
+          <Row className="g-3 justify-content-center">
+            {recensioni.map((rec, idx) => (
+              <Col xs={12} md={4} lg={2} key={idx} className="recensione recensione-glass mx-2">
+                <h3>{rec.nome}</h3>
+                <div>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <span key={star} style={{ color: star <= rec.rating ? "#FFD700" : "#ccc" }}>
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <p>{rec.testo}</p>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </div>
+    );
+    /*const [selectedStar, setSelectedStar] = useState(0);
   const [hoveredStar, setHoveredStar] = useState(0);
   return (
     <div className="fw-bold text-center mb-5 mt-5">
@@ -66,6 +93,7 @@ const Recensioni = () => {
         </Row>
       </Container>
     </div>
-  );
+  );*/
+  }
 };
 export default Recensioni;

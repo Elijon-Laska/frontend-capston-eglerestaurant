@@ -1,4 +1,5 @@
-import { BsStarFill, BsStar } from "react-icons/bs";
+{
+  /*import { BsStarFill, BsStar } from "react-icons/bs";
 
 const StarRating = ({ rating }) => (
   <div>
@@ -7,4 +8,5 @@ const StarRating = ({ rating }) => (
     )}
   </div>
 );
-export default StarRating;
+export default StarRating;*/
+}
